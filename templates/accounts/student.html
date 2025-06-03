@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Room Booking{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/student.css' %}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<section>
+    <div class="display-content">
+
+        <!-- ✅ Message block -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show custom-alert" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="content">
+            <h1>Notice</h1>
+        </div>
+
+        <p>Your gender has been listed as: <strong>{{ gender }}</strong></p>
+        <p>If not clear, update below:</p>
+        <form method="post">
+            {% csrf_token %}
+            <label for="id_gender">Select your gender:</label><br>
+            {{ form.gender }}
+            <button type="submit" class="btn btn-warning">Update Gender</button>
+        </form>
+        <br>
+
+        <p>Selection of wrong gender will lead to room reallocation and you will not be guaranteed of a room.</p>
+
+        <a href="{% url 'book_room' %}" class="btn btn-success mt-3">Proceed to Booking</a>
+    </div>
+</section>
+
+<!-- Bootstrap JS for alert dismissal -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Room Booking{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/period.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="container">
+    <div class="notice-box">
+        <h2>Booking Period</h2>
+        <p>The room booking period has not started yet or has ended.</p>
+        <p>Please check back later.</p>
+    </div>
+</main>
+{% endblock %}

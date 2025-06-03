@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Booking</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'accounts/styles.css' %}">
+</head>
+<body>
+    <div class="container my-4">
+        <!-- Display only login-related error or warning messages -->
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.tags == 'error' or message.tags == 'warning' %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        <div class="row gx-4 gy-4">
+            <div class="col-12 col-md-6">
+                <div class="border bg-white p-4 rounded shadow-sm form-container w-100">            
+                    <h1 class="mb-3">Login Details</h1>
+                    <p class="p1">
+                        Room booking for the First Years 2025 cohort will be on the 20th of August 2025 at 12pm. Room Booking for continuing will be on 23rd August 2025 at 12:00pm.
+                    </p>
+                    <p class="p2">
+                        For more inquiries, please mail us via 
+                        <a href="mailto:customercare@jkuat.ac.ke">customercare@jkuat.ac.ke</a>, or call the University Customer Care through 0778338989
+                    </p>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="border bg-white p-4 rounded shadow-sm">
+                    <div class="image mb-3">
+                        <img src="{% static 'accounts/images/jkuat_logo.png' %}" alt="jkuat_logo">
+                    </div>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+                        <div class="mb-3">
+                            <label for="{{ form.username.id_for_label }}" class="form-label">{{ form.username.label }}</label>
+                            {{ form.username }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="{{ form.password.id_for_label }}" class="form-label">{{ form.password.label }}</label>
+                            {{ form.password }}
+                        </div>
+                        <button type="submit" class="btn btn-login">Login</button>
+                    </form>    
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

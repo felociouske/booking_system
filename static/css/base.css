@@ -1,0 +1,29 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+.navlinks {
+    gap: 1rem;
+}
+.navlinks a {
+    text-decoration: none;
+    color: #fff;
+}
+.navlinks a:hover {
+    text-decoration: underline;
+    color: #d4edda; 
+}
+
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column !important; /* override bootstrap */
+        height: auto !important;
+        padding: 10px 0;
+    }
+    .navlinks {
+        flex-direction: column !important;
+        align-items: center;
+        gap: 0.5rem;
+        margin: 5px 0;
+    }
+}

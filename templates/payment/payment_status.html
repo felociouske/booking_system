@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Payment Status{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/payment_status.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="payment-status-section">
+  <div class="status-container">
+    <h2>Payment Status</h2>
+
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    {% if payment %}
+      <div class="status-card">
+        <p><strong>Transaction Code:</strong> {{ payment.transaction_code }}</p>
+        <p><strong>Amount Paid:</strong> KES {{ payment.amount }}</p>
+        <p><strong>Date Submitted:</strong> {{ payment.date_submitted }}</p>
+        <p><strong>Status:</strong>
+          {% if payment.status == 'approved' %}
+            <span class="status-approved">Approved</span>
+          {% elif payment.status == 'pending' %}
+            <span class="status-pending">Pending</span>
+          {% elif payment.status == 'rejected' %}
+            <span class="status-rejected">Rejected</span>
+          {% else %}
+            <span class="status-unknown">Unknown</span>
+          {% endif %}
+        </p>
+      </div>
+
+      {% if payment.status == 'approved' %}
+        <div class="action-button">
+          <a href="{% url 'book_room' %}" class="btn btn-success">Proceed to Book a Room</a>
+        </div>
+      {% elif payment.status == 'pending' %}
+        <div class="action-button">
+          <p>Your payment is currently pending approval. Please wait for confirmation.</p>
+        </div>
+      {% elif payment.status == 'rejected' %}
+        <div class="action-button">
+          <p>Your payment was rejected. Please contact support or resubmit your payment.</p>
+          <a href="{% url 'submit_payment' %}" class="btn btn-primary">Resubmit Payment</a>
+        </div>
+      {% endif %}
+    {% else %}
+      <p>You have not submitted any payment yet.</p>
+      <a href="{% url 'submit_payment' %}" class="btn btn-primary">Submit Payment</a>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Your Booking{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/student.css' %}">
+{% endblock %}
+
+{% block content %}
+<section>
+  <div class="container mb-3">
+    <!-- Success messages only -->
+    {% if messages %}
+      {% for message in messages %}
+        {% if message.tags == 'success' %}
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+
+    <div class="display-content">
+      <div class="content mb-3">
+        <h1>Booking Confirmation</h1>
+      </div>
+
+      {% if booking %}
+        <p><strong>Hall:</strong> {{ booking.room.hall }}</p>
+        <p><strong>Room Number:</strong> {{ booking.room.room_number }}</p>
+        <p><strong>Booking Time:</strong> {{ booking.date_booked|date:"Y-m-d H:i" }}</p>
+
+      {% else %}
+        <p>You have not made any booking.</p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %}
