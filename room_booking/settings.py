@@ -17,7 +17,8 @@ import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = config('hv3!nng-zyyd-nf_x$&5-*9-rv_h&gt^r1t=3u@a0ichh23cvu', default='unsafe-defult-secret-key')
+SECRET_KEY = config('SECRET_KEY', default='unsafe-default-secret-key')
+
 
 #SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
