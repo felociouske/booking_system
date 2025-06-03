@@ -17,8 +17,9 @@ import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+SECRET_KEY = config('hv3!nng-zyyd-nf_x$&5-*9-rv_h&gt^r1t=3u@a0ichh23cvu', default='unsafe-defult-secret-key')
 
-SECRET_KEY = config('SECRET_KEY')
+#SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='').split(',')
 
@@ -117,10 +118,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# Optional (for development)
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
-# For production (collected static files)
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
 
 LOGIN_REDIRECT_URL = '/accounts/student/'
 
