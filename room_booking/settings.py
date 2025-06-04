@@ -13,7 +13,7 @@ SECRET_KEY = config('SECRET_KEY', default='unsafe-default-secret-key')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = [host.strip() for host in config('ALLOWED_HOSTS', default='localhost,127.0.0.1').split(',')]
-print("ALLOWED_HOSTS:", ALLOWED_HOSTS)
+
 
 
 # Application definition
@@ -31,6 +31,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
