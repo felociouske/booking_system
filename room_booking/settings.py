@@ -62,7 +62,14 @@ WSGI_APPLICATION = 'room_booking.wsgi.application'
 
 # Database
 DATABASES = {
-    'default': dj_database_url.config(default='sqlite:///db.sqlite3')
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'room_booking_db_bbhb',
+        'USER': 'room_booking_db_bbhb_user',
+        'PASSWORD': 'DoBAUYQ7fhLcqEpsoF551UhF8fW7FBdm',
+        'HOST': 'dpg-d10n2dmmcj7s73bs62rg-a.oregon-postgres.render.com',
+        'PORT': '5432',
+    }
 }
 
 # Password validation
