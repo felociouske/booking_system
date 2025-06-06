@@ -21,9 +21,10 @@ class Payment(models.Model):
 class PaymentInfo(models.Model):
     phone_number = models.CharField(max_length=20, default="0755913939")
     recipient_name = models.CharField(max_length=100, default="MARTIN MUNGAI")
+    paybill_number = models.CharField(max_length=20,default="303030")
 
     def __str__(self):
-        return f"{self.phone_number} - {self.recipient_name}"
+        return f"{self.phone_number} - {self.recipient_name} - {self.paybill_number}"
 
     class Meta:
         verbose_name = "Payment Information"

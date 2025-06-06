@@ -15,4 +15,4 @@ class PaymentAdmin(admin.ModelAdmin):
 
 @admin.register(PaymentInfo)
 class PaymentInfoAdmin(admin.ModelAdmin):
-    list_display = ('phone_number', 'recipient_name')
+    list_display = ('phone_number', 'recipient_name','paybill_number')
