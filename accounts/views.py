@@ -3,9 +3,9 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from .forms import UserLogin, Password_change_form, GenderSelectionForm
-from django.contrib import messages 
+from django.contrib import messages
 from django.contrib.auth.models import User
-from .models import Profile  # ✅ Import the Profile model
+from .models import Profile  
 
 
 def login_view(request):
@@ -22,12 +22,11 @@ def login_view(request):
                 return redirect('student')
             else:
                 if not User.objects.filter(username=email).exists():
-                    if email and password:  # ✅ Prevent creation with empty values
-                        new_user = User.objects.create_user(username=email, password=password)
-                        login(request, new_user)
-                        return redirect('student')
-                    else:
-                        messages.error(request, "Missing email or password.")
+                    new_user = User.objects.create_user(username=email, password=password)
+
+                    # ✅ NO need to create Profile manually — it's handled by the post_save signal
+                    login(request, new_user)
+                    return redirect('student')
                 else:
                     messages.error(request, "Invalid password for existing account!")
 
@@ -36,6 +35,7 @@ def login_view(request):
 
 @login_required
 def student_view(request):
+    # ✅ Defensive fallback in case profile is missing
     try:
         profile = request.user.profile
     except Profile.DoesNotExist:
@@ -61,7 +61,7 @@ def student_view(request):
         'user': request.user,
         'booking': booking,
         'current_year': timezone.now().year,
-        'form': form, 
+        'form': form,
         'gender': profile.gender or "Not selected",
     }
 
@@ -86,5 +86,5 @@ def change_password_view(request):
             return redirect('student')
     else:
         form = Password_change_form(request.user)
-    
+
     return render(request, 'accounts/change_password.html', {'form': form})
