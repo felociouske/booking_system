@@ -2,14 +2,14 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
-from .forms import userlogin, Password_change_form, GenderSelectionForm
+from .forms import UserLogin, Password_change_form, GenderSelectionForm
 from django.contrib import messages 
 from django.contrib.auth.models import User
 from .models import Profile  # ✅ Import the Profile model
 
 
 def login_view(request):
-    form = userlogin(data=request.POST or None)
+    form = UserLogin(data=request.POST or None)
 
     if request.method == 'POST':
         if form.is_valid():

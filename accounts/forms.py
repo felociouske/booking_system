@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from .models import Profile
 
 
-class userlogin(forms.Form):
+class UserLogin(forms.Form):
     username = forms.CharField(label = "Enter Your email Address(Same as one used on admission)", widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Student Email/Personal Email)"}))
     password = forms.CharField(label="Enter Your Registration Number in Capital Letters",widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': "Password"}),max_length=15,help_text="Insert Your correct Registration Number")
 
