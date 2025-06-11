@@ -5,7 +5,7 @@ from django.utils import timezone
 from .forms import userlogin, Password_change_form, GenderSelectionForm
 from django.contrib import messages 
 from django.contrib.auth.models import User
-
+from .models import Profile  # ✅ Import the Profile model
 
 
 def login_view(request):
@@ -22,17 +22,24 @@ def login_view(request):
                 return redirect('student')
             else:
                 if not User.objects.filter(username=email).exists():
-                    new_user = User.objects.create_user(username=email, password=password)
-                    login(request, new_user)
-                    return redirect('student')
+                    if email and password:  # ✅ Prevent creation with empty values
+                        new_user = User.objects.create_user(username=email, password=password)
+                        login(request, new_user)
+                        return redirect('student')
+                    else:
+                        messages.error(request, "Missing email or password.")
                 else:
                     messages.error(request, "Invalid password for existing account!")
 
     return render(request, 'accounts/login.html', {'form': form})
 
+
 @login_required
 def student_view(request):
-    profile = request.user.profile
+    try:
+        profile = request.user.profile
+    except Profile.DoesNotExist:
+        profile = Profile.objects.create(user=request.user)
 
     if request.method == 'POST':
         form = GenderSelectionForm(request.POST, instance=profile)
@@ -65,6 +72,7 @@ def logout_view(request):
     logout(request)
     return redirect('login')
 
+
 @login_required
 def change_password_view(request):
     if request.method == 'POST':
@@ -75,7 +83,7 @@ def change_password_view(request):
             request.user.save()
             update_session_auth_hash(request, request.user)  # Prevents logout
             messages.success(request, 'Password successfully changed.')
-            return redirect('student')  # Redirect to your dashboard or home
+            return redirect('student')
     else:
         form = Password_change_form(request.user)
     
