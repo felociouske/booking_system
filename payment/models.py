@@ -8,7 +8,7 @@ class Payment(models.Model):
         ('rejected', 'Rejected'),
     )
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     transaction_code = models.CharField(max_length=20, unique=True)
     amount = models.DecimalField(max_digits=8, decimal_places=2)
     date_submitted = models.DateField(auto_now_add=True)

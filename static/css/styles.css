@@ -2,13 +2,14 @@
 
 body {
     font-family: 'Open Sans', sans-serif;
-    background-color: #f4f4f4;
+    background: url('/static/images/background.jpg') no-repeat center center fixed;
+    background-size: cover;
 }
 
 /* Login Section */
 .login_details h1 {
     font-size: 1rem;
-    background-color: #d9d9d9;
+    /* background-color: #d9d9d9; */
     font-weight: 400;
     padding: 10px;
 }
@@ -77,4 +78,24 @@ body {
     .image img {
         width: 150px;
     }
+}
+
+.download-section {
+    background-color: white;
+    width: 90%;
+    margin: 0 auto 40px auto;  /* center it horizontally, add space below */
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.download-section a {
+    color: #0d6efd;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.download-section a:hover {
+    text-decoration: underline;
 }

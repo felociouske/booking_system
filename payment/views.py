@@ -3,6 +3,8 @@ from .forms import PaymentForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Payment, PaymentInfo
+from django.db.models import Sum
+
 
 @login_required
 def submit_payment(request):
@@ -10,15 +12,13 @@ def submit_payment(request):
     if not payment_info:
         payment_info = PaymentInfo.objects.create()  # Create default if none exists
 
-    # Check if user has a payment already
-    if hasattr(request.user, 'payment'):
-        if request.user.payment.status == 'approved':
-            messages.success(request, "Payment already approved. You can now book a room.")
-            return redirect('book_room')
-        else:
-            messages.info(request, "Your payment is under review.")
-            return redirect('payment_status')
 
+    # Total approved payments
+    total_paid = Payment.objects.filter(user=request.user, status='approved').aggregate(Sum('amount'))['amount__sum'] or 0
+
+    if total_paid >= 6500:
+        messages.success(request, f"You have already paid KES {total_paid}. You can now book a room.")
+        return redirect('book_room')
     # Handle form submission
     if request.method == 'POST':
         form = PaymentForm(request.POST)

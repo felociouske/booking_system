@@ -30,11 +30,14 @@
       {% if booking %}
         <p><strong>Hall:</strong> {{ booking.room.hall }}</p>
         <p><strong>Room Number:</strong> {{ booking.room.room_number }}</p>
+        {% if booking.room.hall == 'Hall 6' %}
+          <p><strong>Side Booked:</strong> {{ booking.get_hall6_side_display }}</p>
+        {% endif %}
         <p><strong>Booking Time:</strong> {{ booking.date_booked|date:"Y-m-d H:i" }}</p>
-
       {% else %}
         <p>You have not made any booking.</p>
       {% endif %}
+
     </div>
   </div>
 </section>

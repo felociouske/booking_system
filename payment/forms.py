@@ -7,6 +7,6 @@ class PaymentForm(forms.ModelForm):
         fields = ['transaction_code', 'amount']
         labels = {'transaction_code': 'Enter the M-Pesa Transaction Code','amount': 'Amount Paid (KES)',}
         widgets ={
-            'transaction_code': forms.TextInput(attrs={'placeholder': 'e.g. TXHAHUAIJS','class': 'form-control'}),
+            'transaction_code': forms.TextInput(attrs={'placeholder': 'e.g. TGL7UA9XGT','class': 'form-control'}),
             'amount': forms.NumberInput(attrs={'placeholder': '6500.00','class': 'form-control'}),
         }

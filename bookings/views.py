@@ -5,32 +5,35 @@ from django.utils import timezone
 from .models import Booking, Room
 from payment.models import Payment
 from .forms import RoomBookingForm
+from django.db.models import Sum
+
+
 
 @login_required
 def book_room(request):
     user = request.user
 
-    # Check if already booked
+    # Check for existing booking (don't redirect)
     existing_booking = Booking.objects.filter(user=user).first()
-    if existing_booking:
-        messages.info(request, "You have already booked a room.")
-        return redirect('booking_success')
+    already_booked = existing_booking is not None
 
-    # Payment check (unchanged)
-    try:
-        payment = Payment.objects.get(user=user)
-        if payment.status != 'approved':
-            messages.warning(request, "Your payment is still pending approval by admin.")
-            return redirect('submit_payment')
-    except Payment.DoesNotExist:
-        messages.warning(request, "Please submit your M-Pesa payment first.")
+    # Sum total approved payments
+    total_paid = Payment.objects.filter(user=user, status='approved').aggregate(Sum('amount'))['amount__sum'] or 0
+    eligible = total_paid >= 6500
+
+    if not eligible:
+        remaining = 6500 - total_paid
+        messages.warning(
+            request, 
+            f"You have paid KES {total_paid}. You need KES {remaining} more to book a room."
+        )
         return redirect('submit_payment')
 
     # Show rooms matching gender
     gender = user.profile.gender
     available_rooms = Room.objects.filter(gender=gender)
 
-    if request.method == 'POST':
+    if request.method == 'POST' and not already_booked and eligible:
         form = RoomBookingForm(request.POST, user=user)
         if form.is_valid():
             room = form.cleaned_data['room']
@@ -51,9 +54,11 @@ def book_room(request):
     return render(request, 'bookings/book_room.html', {
         'form': form,
         'rooms': available_rooms,
+        'total_paid': total_paid,
+        'eligible': eligible,
+        'already_booked': already_booked,
+        'booking': existing_booking,
     })
-
-
 
 @login_required
 def booking_success(request):

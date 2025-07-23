@@ -30,57 +30,69 @@
         {% endif %}
         <li><strong>Date:</strong> {{ booking.date_booked }}</li>
       </ul>
-    {% else %}
-      <form method="post">
-        {% csrf_token %}
 
-        {% if form.errors %}
-          <div style="color: red; margin-bottom: 1em;">
-            <ul>
-              {% for field in form %}
-                {% for error in field.errors %}
+    {% else %}
+
+      {% if eligible %}
+        <form method="post">
+          {% csrf_token %}
+
+          {% if form.errors %}
+            <div style="color: red; margin-bottom: 1em;">
+              <ul>
+                {% for field in form %}
+                  {% for error in field.errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
                   <li>{{ error }}</li>
                 {% endfor %}
-              {% endfor %}
-              {% for error in form.non_field_errors %}
-                <li>{{ error }}</li>
-              {% endfor %}
-            </ul>
-          </div>
-        {% endif %}
+              </ul>
+            </div>
+          {% endif %}
 
-        <label for="id_room_choice">Choose Room:</label><br>
-        <select name="room_choice" id="id_room_choice" required class="form-select">
-          <option value="">--- Select Room ---</option>
-          {% for room in rooms %}
-            {% if room.hall == "Hall 6" %}
-              {% with occupants=room.current_occupants %}
-                {% if occupants.A < 2 %}
-                  <option value="{{ room.id }}|A">
-                    {{ room.hall }} - Room {{ room.room_number }} (Side A: {{ occupants.A }}/2)
-                  </option>
-                {% endif %}
-                {% if occupants.B < 2 %}
-                  <option value="{{ room.id }}|B">
-                    {{ room.hall }} - Room {{ room.room_number }} (Side B: {{ occupants.B }}/2)
-                  </option>
-                {% endif %}
-              {% endwith %}
-            {% else %}
-              {% with occupants=room.current_occupants %}
-                {% if occupants < room.capacity %}
-                  <option value="{{ room.id }}">
-                    {{ room.hall }} - Room {{ room.room_number }} ({{ occupants }}/{{ room.capacity }})
-                  </option>
-                {% endif %}
-              {% endwith %}
-            {% endif %}
-          {% endfor %}
-        </select>
+          <label for="id_room_choice">Choose Room:</label><br>
+          <select name="room_choice" id="id_room_choice" required class="form-select">
+            <option value="">--- Select Room ---</option>
+            {% for room in rooms %}
+              {% if room.hall == "Hall 6" %}
+                {% with occupants=room.current_occupants %}
+                  {% if occupants.A < 2 %}
+                    <option value="{{ room.id }}|A">
+                      {{ room.hall }} - Room {{ room.room_number }} (Side A: {{ occupants.A }}/2)
+                    </option>
+                  {% endif %}
+                  {% if occupants.B < 2 %}
+                    <option value="{{ room.id }}|B">
+                      {{ room.hall }} - Room {{ room.room_number }} (Side B: {{ occupants.B }}/2)
+                    </option>
+                  {% endif %}
+                {% endwith %}
+              {% else %}
+                {% with occupants=room.current_occupants %}
+                  {% if occupants < room.capacity %}
+                    <option value="{{ room.id }}">
+                      {{ room.hall }} - Room {{ room.room_number }} ({{ occupants }}/{{ room.capacity }})
+                    </option>
+                  {% endif %}
+                {% endwith %}
+              {% endif %}
+            {% endfor %}
+          </select>
 
-        <br>
-        <button type="submit" class="btn btn-success mt-3">Book Room</button>
-      </form>
+          <br>
+          <button type="submit" class="btn btn-success mt-3">Book Room</button>
+        </form>
+
+      {% else %}
+        <p style="color: red;">
+         You have paid <strong>KES {{ total_paid }}</strong>. You need <strong>KES {{ 6500|add:"-total_paid" }}</strong> more to book a room.
+          <br>
+          <a href="{% url 'submit_payment' %}" class="btn btn-warning mt-2">Add Payment</a>
+        </p>
+      {% endif %}
+
     {% endif %}
   </div>
 </section>
