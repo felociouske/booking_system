@@ -66,35 +66,11 @@ TEMPLATES = [
 WSGI_APPLICATION = 'room_booking.wsgi.application'
 
 #Database
-
-# ✅ Railway Database (uses DATABASE_URL env var)
 DATABASES = {
-    'default': dj_database_url.config(conn_max_age=600)
+    'default': dj_database_url.config(
+        default=f"postgresql://{os.getenv('PGUSER')}:{os.getenv('POSTGRES_PASSWORD')}@{os.getenv('PGHOST')}:5432/{os.getenv('PGDATABASE')}"
+    )
 }
-
-# Fly.io PostgreSQL (uses DATABASE_URL env var from fly secrets)
-# DATABASES = {
-#     'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
-# }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'room_booking_db_bbhb',
-#         'USER': 'room_booking_db_bbhb_user',
-#         'PASSWORD': 'DoBAUYQ7fhLcqEpsoF551UhF8fW7FBdm',
-#         'HOST': 'dpg-d10n2dmmcj7s73bs62rg-a.oregon-postgres.render.com',
-#         'PORT': '5432',
-#     }
-# }
-
-
-# DATABASES = {
-    #'default': {
-        #'ENGINE': 'django.db.backends.sqlite3',
-        #'NAME': BASE_DIR / 'db.sqlite3',
-    #}
-#}
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
