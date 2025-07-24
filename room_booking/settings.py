@@ -68,9 +68,12 @@ WSGI_APPLICATION = 'room_booking.wsgi.application'
 #Database
 DATABASES = {
     'default': dj_database_url.config(
-        default=f"postgresql://{os.getenv('PGUSER')}:{os.getenv('POSTGRES_PASSWORD')}@{os.getenv('PGHOST')}:5432/{os.getenv('PGDATABASE')}"
+        default=config('DATABASE_URL'),
+        conn_max_age=600,
+        ssl_require=True
     )
 }
+
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
