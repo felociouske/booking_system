@@ -70,12 +70,16 @@ WSGI_APPLICATION = 'room_booking.wsgi.application'
 
 #Database
 DATABASES = {
-    'default': dj_database_url.parse(
-        os.environ.get('DATABASE_URL'),
-        conn_max_age=600,
-        ssl_require=True
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'lwdQEIyBKbbVFSfOSgQkjEOuGVpFSCYD',
+        'HOST': 'postgres.railway.internal',
+        'PORT': '5432',
+    }
 }
+
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
