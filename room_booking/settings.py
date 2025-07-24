@@ -18,6 +18,9 @@ DEBUG = config('DEBUG', default=True, cast=bool)
 #ALLOWED_HOSTS = ['192.168.0.102','127.0.0.1']  # For development purposes only, use specific hosts in production
 ALLOWED_HOSTS = ['web-production-0418c.up.railway.app', '127.0.0.1', 'localhost']
 
+CSRF_TRUSTED_ORIGINS = [
+    os.getenv("CSRF_ORIGIN", "https://web-production-0418c.up.railway.app")
+]
 
 
 # Application definition
