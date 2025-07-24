@@ -1,0 +1,44 @@
+/* Gold-dark custom tweaks */
+:root {
+  --bs-warning: #f9c74f; /* Gold accent */
+}
+
+.content-wrapper {
+    background-color: #121212 !important; /* Dark background */
+}
+
+.card, .form-control, .table {
+    background-color: #1e1e1e !important;
+    border-radius: 12px !important;
+    border: 1px solid #333;
+    color: #fff !important;
+}
+
+input.form-control, select.form-control, textarea.form-control {
+    background-color: #1a1a1a;
+    color: #f9c74f;
+    border-color: #f9c74f;
+}
+
+.sidebar {
+    background-color: #181818;
+}
+
+.sidebar .nav-link.active {
+    background-color: #f9c74f !important;
+    color: #000 !important;
+}
+
+a {
+    color: #f9c74f;
+}
+
+a:hover {
+    color: #fff700;
+}
+
+.btn-warning {
+    background-color: #f9c74f !important;
+    border-color: #f9c74f !important;
+    color: #000 !important;
+}
