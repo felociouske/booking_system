@@ -70,12 +70,16 @@ WSGI_APPLICATION = 'room_booking.wsgi.application'
 
 #Database
 DATABASES = {
-    'default': dj_database_url.parse(
-        config('DATABASE_URL'),
-        conn_max_age=600,
-        ssl_require=True
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'lwdQEIyBKbbVFSfOSgQkjEOuGVpFSCYD',
+        'HOST': 'postgres.railway.internal',
+        'PORT': '5432',
+    }
 }
+
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -108,7 +112,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 JAZZMIN_SETTINGS = {
-    "site_title": "JKUSOS Admin",
+    "site_title": "JKUAT Admin",
     "site_header": "JKUAT Dashboard",
     "site_brand": "JKUSOS Club",
     "site_logo": "images/jkuat_logo.png",  # Place this in static/images/
