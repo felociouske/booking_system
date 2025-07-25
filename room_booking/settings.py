@@ -16,7 +16,14 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 #ALLOWED_HOSTS = [host.strip() for host in config('ALLOWED_HOSTS', default='localhost,127.0.0.1',).split(',')]
 #ALLOWED_HOSTS = ['192.168.0.102','127.0.0.1']  # For development purposes only, use specific hosts in production
-ALLOWED_HOSTS = ['web-production-0418c.up.railway.app', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+    'web-production-0418c.up.railway.app',
+    'jkuathostel.online',
+    'www.jkuathostel.online',
+]
+
 
 CSRF_TRUSTED_ORIGINS = [
     os.getenv("CSRF_ORIGIN", "https://web-production-0418c.up.railway.app")
