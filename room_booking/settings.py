@@ -26,7 +26,9 @@ ALLOWED_HOSTS = [
 
 
 CSRF_TRUSTED_ORIGINS = [
-    os.getenv("CSRF_ORIGIN", "https://web-production-0418c.up.railway.app")
+    os.getenv("CSRF_ORIGIN", "https://web-production-0418c.up.railway.app"),
+    "https://jkuathostel.online",
+    "https://www.jkuathostel.online",
 ]
 
 
